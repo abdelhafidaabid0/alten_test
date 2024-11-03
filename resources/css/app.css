@@ -17,3 +17,7 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
+
+.Vue-Toastification__container,.Vue-Toastification__toast {
+    z-index: 300;
+}

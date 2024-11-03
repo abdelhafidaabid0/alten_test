@@ -1,0 +1,322 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API E-Commerce Laravel",
+    "description": "Documentation de l'API pour la gestion des produits, panier d'achat et formulaire de contact.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000",
+      "description": "Serveur local"
+    }
+  ],
+  "paths": {
+    "/api/products": {
+      "get": {
+        "summary": "Liste des produits",
+        "description": "Récupère une liste paginée de tous les produits.",
+        "responses": {
+          "200": {
+            "description": "Liste des produits",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Product" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Créer un produit",
+        "description": "Crée un nouveau produit avec les informations fournies.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ProductCreate" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Produit créé avec succès",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Product" }
+              }
+            }
+          },
+          "422": {
+            "description": "Erreur de validation"
+          }
+        }
+      }
+    },
+    "/api/products/{id}": {
+      "get": {
+        "summary": "Détails d'un produit",
+        "description": "Récupère les détails d'un produit spécifique par ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID du produit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Détails du produit",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Product" }
+              }
+            }
+          },
+          "404": {
+            "description": "Produit non trouvé"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Mettre à jour un produit",
+        "description": "Met à jour les informations d'un produit par ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID du produit"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ProductUpdate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Produit mis à jour avec succès",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Product" }
+              }
+            }
+          },
+          "404": {
+            "description": "Produit non trouvé"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Supprimer un produit",
+        "description": "Supprime un produit spécifique par ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID du produit"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Produit supprimé avec succès"
+          },
+          "404": {
+            "description": "Produit non trouvé"
+          }
+        }
+      }
+    },
+    "/cart": {
+      "get": {
+        "summary": "Voir le contenu du panier",
+        "description": "Affiche les produits actuellement dans le panier.",
+        "responses": {
+          "200": {
+            "description": "Contenu du panier",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Cart" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/add_to_cart/{product_id}/{quantity}": {
+      "post": {
+        "summary": "Ajouter un produit au panier",
+        "description": "Ajoute un produit spécifique au panier avec la quantité indiquée.",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID du produit"
+          },
+          {
+            "name": "quantity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Quantité à ajouter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produit ajouté au panier",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Cart" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/remove_from_cart/{product_id}": {
+      "post": {
+        "summary": "Retirer un produit du panier",
+        "description": "Retire un produit spécifique du panier.",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID du produit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produit retiré du panier",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Cart" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contact": {
+      "post": {
+        "summary": "Envoyer un message de contact",
+        "description": "Soumet un message de contact avec les informations fournies.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ContactMessage" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Message envoyé avec succès",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Message envoyé avec succès"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "price": { "type": "number" },
+          "quantity": { "type": "integer" },
+          "category": { "type": "string" },
+          "inventory_status": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "updated_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "ProductCreate": {
+        "type": "object",
+        "required": ["name", "price", "quantity", "category", "inventory_status"],
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "price": { "type": "number" },
+          "quantity": { "type": "integer" },
+          "category": { "type": "string" },
+          "inventory_status": { "type": "string" }
+        }
+      },
+      "ProductUpdate": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "price": { "type": "number" },
+          "quantity": { "type": "integer" },
+          "category": { "type": "string" },
+          "inventory_status": { "type": "string" }
+        }
+      },
+      "Cart": {
+        "type": "object",
+        "properties": {
+          "products": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Product" }
+          },
+          "total_quantities": { "type": "integer" },
+          "total_price": { "type": "number" }
+        }
+      },
+      "ContactMessage": {
+        "type": "object",
+        "required": ["email", "message"],
+        "properties": {
+          "nom": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "sujet": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -13,7 +13,7 @@
 
     <!-- Product Information -->
     <h2 class="text-lg font-semibold text-gray-800">{{ product.name }}</h2>
-    <p class="text-green-600 text-xl font-semibold">{{ product.price }} €</p>
+    <p class="text-green-600 text-3xl font-semibold text-center border border-gray-200 rounded p-4">{{ product.price }} €</p>
     <p class="text-gray-500">Quantité disponible: {{ product.quantity }}</p>
     <p class="text-gray-600 text-sm mt-2">{{ product.description }}</p>
     <div class="flex flex-wrap self-center gap-2 p-2 rounded bg-gray-100" v-if="product.quantity > 0">

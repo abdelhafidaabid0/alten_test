@@ -65,7 +65,6 @@ const categories = computed(() => usePage().props.categories_list);
 const status = computed(() => usePage().props.statuts_list);
 const ratings = computed(() => usePage().props.rating_list);
 const active_filters = computed(() => usePage().props.active_filters);
-console.log(active_filters.value)
 
 // Define reactive filter variables
 const selectedStatut = ref<string | null>(active_filters.value.statut ?? 0);
@@ -77,10 +76,11 @@ const selectedRating = ref<number | null>(active_filters.value.min_rating);
 // Emit event to send filters to parent component
 const emit = defineEmits<{
   (e: 'filter-changed', filters: {
-    category: string | null;
+    statut: string | null | number;
+    category: string | null | number;
     min_price: number | null;
     max_price: number | null;
-    rating: number | null;
+    min_rating: number | null;
   }): void;
 }>();
 
@@ -106,6 +106,3 @@ const resetFilters = () => {
 };
 </script>
 
-<style scoped>
-/* Using Tailwind CSS, so no additional custom styles are necessary */
-</style>

@@ -2,9 +2,10 @@
 
 namespace App\Core\Contacts;
 
+use App\Base\BaseFormRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SendMessageContactRequest extends FormRequest
+class SendMessageContactRequest extends BaseFormRequest
 {
     public function authorize()
     {
@@ -14,7 +15,9 @@ class SendMessageContactRequest extends FormRequest
     public function rules()
     {
         return [
+            'nom' => 'sometimes',
             'email' => 'required|email',
+            'sujet' => 'sometimes|max:150',
             'message' => 'required|string|max:300',
         ];
     }

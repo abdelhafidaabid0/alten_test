@@ -1,7 +1,8 @@
 <template>
   <div class="grid gap-2">
     <SectionTitle>Liste des Produits</SectionTitle>
-    <ProductFiltres @filter-changed="fetchFilteredProducts"/>
+    <ProductFiltres @FilterChanged="fetchFilteredProducts"/>
+<!--    <ProductsTri @TriChanged="fetchTriProducts"></ProductsTri>-->
     <Pagination v-bind="products"></Pagination>
     <div
         class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2 min-h-[75vh] place-items-start grid-flow-row auto-rows-[minmax(0,_1fr)]">
@@ -10,8 +11,9 @@
       </template>
     </div>
     <Pagination v-bind="products"></Pagination>
-    <Modal closeable :show="show_detail" @close="show_detail=false" >
-      <ProductDetail :product="selected_product" @CloseDetail="show_detail = false" @addToCart="add_to_cart"></ProductDetail>
+    <Modal closeable :show="show_detail" @close="show_detail=false">
+      <ProductDetail :product="selected_product" @CloseDetail="show_detail = false"
+                     @addToCart="add_to_cart"></ProductDetail>
     </Modal>
   </div>
 </template>
@@ -27,6 +29,8 @@ import ProductFiltres from "../../Components/ProductFiltres.vue";
 import {router} from "@inertiajs/vue3";
 import ProductDetail from "./ProductDetail.vue";
 import Modal from "../../Components/Modal.vue";
+import {route} from "ziggy-js";
+import ProductsTri from "../../Components/ProductsTri.vue";
 
 const props = defineProps<{ products: PaginatorInterface<Product> }>();
 
@@ -49,15 +53,29 @@ const fetchFilteredProducts = (filters: {
   // Example: Use filters to send a request to the backend API
 };
 
+const fetchTriProducts = (filters) => {
+  // Fetch products from API or perform filter logic here
+  filters.page = 1;
+  router.get(props.products.path, filters, {
+    preserveScroll: true,
+    replace: true,
+  })
+  // Example: Use filters to send a request to the backend API
+};
+
 const show_detail = ref(false);
-const selected_product = ref(null)
+const selected_product = ref<Product | null>(null)
 
 const consulte_product = (product: Product) => {
   show_detail.value = true;
   selected_product.value = product;
 }
-const add_to_cart = (product: Product,quantity:number) => {
-  console.log(product,quantity)
+const add_to_cart = (product: Product, quantity: number) => {
+  router.post(route("cart.add_to_cart", [product.id, quantity]), {}, {
+    preserveState: true,
+    preserveScroll: true,
+    replace: true
+  })
 }
 
 </script>

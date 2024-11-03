@@ -3,6 +3,7 @@
 namespace App\Middleware;
 
 use App\Core\Cart\CartService;
+use App\Core\Notification\NotificationService;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -37,11 +38,11 @@ class HandleInertiaRequests extends Middleware {
      * @return array<string, mixed>
      */
     public function share(Request $request) : array {
-        $panier_info = static fn() => CartService::get_cart_info();
 
 
         return array_merge(parent::share($request), [
-            "panier_info" => $panier_info,
+            "cart_info" => CartService::get_cart_info(),
+            "notifications" => NotificationService::get_notifications(),
         ]);
     }
 }

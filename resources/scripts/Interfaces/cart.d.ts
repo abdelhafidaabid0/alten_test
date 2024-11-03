@@ -9,7 +9,8 @@ export interface CartItem {
 }
 
 export interface Cart {
-    products: Product[];
-    nombre?: number;
-    total_prix?: number;
+    products?: Product[];
+    quantities?: any;
+    total_quantities?: number;
+    total_price?: number;
 }

@@ -75,6 +75,7 @@ const emit = defineEmits<{
 // Fonction pour ajouter le produit au panier
 const add_to_cart = () => {
   emit('add-to-cart', props.product,quantity.value);
+  quantity.value = 1;
 };
 const consulte_product = () => {
   emit('consulte-product', props.product);

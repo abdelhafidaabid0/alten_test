@@ -11,9 +11,12 @@
 |
 */
 
-pest()->extend(Tests\TestCase::class)
-    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
-    ->in('Feature');
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
+pest()
+    ->extend(Tests\TestCase::class)
+    ->use(DatabaseTransactions::class)
+    ->in('Feature','Unit');
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +44,6 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
-{
+function something() {
     // ..
 }

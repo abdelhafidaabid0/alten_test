@@ -3,24 +3,26 @@
 namespace App\Core\Contacts;
 
 use App\Base\BaseController;
+use App\Core\Notification\NotificationService;
 use App\Tier\Inertia\InertiaService;
 
 class ContactController extends BaseController {
 
     public function index() {
-        return InertiaService::render_page("Contact", "ContactForm");
+        return InertiaService::render_page("Contact", "ContactForm", [
+            'title' => "Contactez-nous",
+
+        ]);
     }
 
 
 
     public function send_message(SendMessageContactRequest $request) {
-        $validated = $request->validate([
-                                            'email'   => 'required|email',
-                                            'message' => 'required|max:300',
-                                        ]);
+        $data = $request->validated();
+
+        NotificationService::show_notification("Message envoyé avec succès !");
 
         // Logique d'envoi d'email ou de sauvegarde du message
-
-        return response()->json(['message' => 'Message envoyé avec succès']);
+        return redirect(route('contact'));
     }
 }
