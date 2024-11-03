@@ -65,6 +65,21 @@ class CartService {
 
 
 
+    public static function update_cart_product_quantity(Product $product, int $quantity) : void {
+        // Retrieve the cart from the session or initialize an empty array
+        $cart = session('cart', []);
+
+        // Check if the product is already in the cart
+        if (isset($cart["selected_products"][$product->id])) {
+            // If product already exists, increment the quantity
+            $cart["selected_products"][$product->id] = $quantity;
+
+            session()?->put('cart', $cart);
+        }
+    }
+
+
+
     public static function remove_from_cart(int $product_id) : void {
         $cart_session = session()?->pull('cart', []);
 
@@ -76,4 +91,5 @@ class CartService {
 
         session()?->put('cart', $cart_session);
     }
+
 }

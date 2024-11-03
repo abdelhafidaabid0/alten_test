@@ -75,7 +75,7 @@ class ProductService {
         }
 
 
-        $per_page = session('product_filters.per_page', request("per_page", 10));
+        $per_page = request("per_page", session('product_filters.per_page',10));
 
         session(['product_filters.statut' => $filtre_statut]);
         session(['product_filters.category' => $filtre_category]);

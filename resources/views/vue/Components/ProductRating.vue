@@ -1,6 +1,5 @@
 <template>
   <div class="flex items-center">
-    <!-- Loop through the maximum rating (5) to display filled or empty stars based on the product rating -->
     <Fa6Icon
         v-for="star in maxRating"
         :key="star"
@@ -25,6 +24,3 @@ const props = defineProps<{
 const maxRating = props.maxRating || 5;
 </script>
 
-<style scoped>
-/* Using Tailwind CSS for styling, so no additional custom styles are necessary */
-</style>

@@ -45,8 +45,31 @@ class CartController extends BaseController {
 
 
 
-    public function remove_from_cart(int $product_id) : RedirectResponse {
+    public function update_cart_product_quantity(int $product_id, $quantity = 1) : RedirectResponse {
+        $product = Product::find($product_id);
 
+        if (!$product) {
+            NotificationService::show_notification("Produit non trouvé !.", NotificationService::TOAST_ERROR);
+
+            CartService::remove_from_cart($product_id);
+
+            return back();
+        }
+
+        if ($product->quantity < $quantity) {
+            NotificationService::show_notification("Nombre de quantité invalide !.", NotificationService::TOAST_ERROR);
+
+            return back();
+        }
+
+        CartService::update_cart_product_quantity($product, $quantity);
+
+        return back();
+    }
+
+
+
+    public function remove_from_cart(int $product_id) : RedirectResponse {
         CartService::remove_from_cart($product_id);
 
         NotificationService::show_notification("Produit supprimé du panier avec succès.");

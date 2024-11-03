@@ -77,6 +77,3 @@ const close_detail = () => {
 };
 </script>
 
-<style scoped>
-/* Using Tailwind CSS for styling */
-</style>

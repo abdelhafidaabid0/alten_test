@@ -5,7 +5,6 @@ import {computed, ref, watch} from 'vue';
 import CartIcon from '../Components/CartIcon.vue';
 import NavLink from '../Components/NavLink.vue';
 import {route} from 'ziggy-js';
-import MessageToast from '../Components/MessageToast.vue';
 import ApplicationLogo from '../Components/ApplicationLogo.vue';
 import {useToast} from 'vue-toastification';
 
@@ -29,7 +28,6 @@ watch(notifications, (notifications) => {
 
 <template>
   <div class="min-h-screen bg-white max-w-7xl mx-auto px-2">
-    <MessageToast></MessageToast>
     <Head :title="usePage().props.title"></Head>
     <nav class="sticky top-0 bg-white z-30 border-b border-gray-100 px-4">
       <!-- Primary Navigation Menu -->

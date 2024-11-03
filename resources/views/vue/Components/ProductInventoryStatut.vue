@@ -46,6 +46,3 @@ const badgeClass = computed(() => {
 });
 </script>
 
-<style scoped>
-/* Using Tailwind CSS classes directly in the template, so no additional custom styles are necessary */
-</style>

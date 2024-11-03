@@ -23,5 +23,8 @@ Route::get('/cart', [CartController::class, 'get_cart'])
 Route::post('/add_to_cart/{product_id}/{quantity}', [CartController::class, 'add_to_cart'])
      ->name('cart.add_to_cart');
 
+Route::post('/update_cart_product_quantity/{product_id}/{quantity}', [CartController::class, 'update_cart_product_quantity'])
+     ->name('cart.update_cart_product_quantity');
+
 Route::post('/remove_from_cart/{product_id}', [CartController::class, 'remove_from_cart'])
      ->name('cart.remove_from_cart');
